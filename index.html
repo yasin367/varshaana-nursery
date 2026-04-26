@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varshaana Nursery – Royal Garden · Udumalaipettai</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700;900&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   ROYAL VARIABLES
+════════════════════════════════════════ */
+:root {
+  --black:    #050a05;
+  --deep:     #0a1a0d;
+  --forest:   #112618;
+  --emerald:  #1a4a28;
+  --jade:     #2d7a4a;
+  --mint:     #4db87a;
+  --pale:     #a8d8b8;
+  --gold:     #c9a84c;
+  --gold2:    #e8c96a;
+  --gold3:    #f5e0a0;
+  --cream:    #faf6ee;
+  --white:    #ffffff;
+  --glass:    rgba(255,255,255,0.04);
+  --glass2:   rgba(255,255,255,0.08);
+  --border:   rgba(201,168,76,0.2);
+  --border2:  rgba(77,184,122,0.2);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  font-family:'Jost',sans-serif;
+  background:var(--black);
+  color:var(--cream);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor { position:fixed; width:12px; height:12px; background:var(--gold); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:transform 0.1s; mix-blend-mode:difference; }
+#cursorRing { position:fixed; width:36px; height:36px; border:1px solid rgba(201,168,76,0.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all 0.15s ease; }
+
+/* ── SCROLL PROGRESS ── */
+#scrollBar { position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg,var(--gold),var(--mint),var(--gold2)); z-index:9999; transition:width 0.08s linear; }
+
+/* ── BACK TO TOP ── */
+#backTop { position:fixed; bottom:32px; right:32px; width:48px; height:48px; border-radius:50%; background:transparent; border:1px solid var(--gold); color:var(--gold); font-size:1rem; cursor:none; z-index:500; opacity:0; transform:translateY(20px); transition:all 0.4s; display:grid; place-items:center; letter-spacing:0; }
+#backTop.show { opacity:1; transform:translateY(0); }
+#backTop:hover { background:var(--gold); color:var(--black); }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; width:100%; z-index:300;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:20px 60px;
+  background:linear-gradient(180deg,rgba(5,10,5,0.98)0%,rgba(5,10,5,0.7)100%);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo {
+  font-family:'Cinzel',serif;
+  font-size:1.1rem; font-weight:700;
+  color:var(--gold);
+  letter-spacing:4px; text-transform:uppercase;
+  display:flex; align-items:center; gap:10px;
+}
+.nav-logo::before { content:''; width:32px; height:1px; background:var(--gold); }
+.nav-logo::after  { content:''; width:32px; height:1px; background:var(--gold); }
+.nav-links { display:flex; gap:36px; list-style:none; }
+.nav-links a {
+  font-family:'Jost',sans-serif;
+  color:rgba(250,246,238,0.6); text-decoration:none;
+  font-size:0.72rem; letter-spacing:3px; text-transform:uppercase;
+  transition:color 0.3s; font-weight:400;
+  position:relative;
+}
+.nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+.nav-links a:hover { color:var(--gold); }
+.nav-links a:hover::after { width:100%; }
+.nav-links a.active { color:var(--gold); }
+.nav-links a.active::after { width:100%; }
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh;
+  background:var(--black);
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+  padding-top:100px;
+  perspective:1200px;
+}
+.hero-video {
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; opacity:0.18; z-index:0; pointer-events:none;
+  filter:saturate(0.6) brightness(0.5);
+}
+/* 3D layered overlays */
+.hero-overlay {
+  position:absolute; inset:0; z-index:1;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(26,74,40,0.6) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 50%,  rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 50%,  rgba(77,184,122,0.05) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(5,10,5,0.95) 0%, rgba(5,10,5,0.4) 40%, rgba(5,10,5,0.85) 100%);
+}
+/* 3D grid floor */
+.hero-grid {
+  position:absolute; bottom:0; left:0; width:100%; height:55%;
+  z-index:2; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.06) 1px, transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(600px) rotateX(70deg);
+  transform-origin:bottom center;
+  mask-image:linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 80%);
+}
+/* Floating orbs */
+.orb {
+  position:absolute; border-radius:50%; pointer-events:none; z-index:2;
+  filter:blur(60px); animation:orbFloat 8s ease-in-out infinite;
+}
+.orb1 { width:400px; height:400px; background:rgba(26,74,40,0.4); top:-80px; right:-80px; animation-delay:0s; }
+.orb2 { width:300px; height:300px; background:rgba(201,168,76,0.12); bottom:80px; left:-60px; animation-delay:3s; }
+.orb3 { width:200px; height:200px; background:rgba(77,184,122,0.1); top:40%; right:20%; animation-delay:5s; }
+@keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
+
+/* Decorative rings */
+.hero-ring {
+  position:absolute; border-radius:50%; pointer-events:none; z-index:2;
+  border:1px solid rgba(201,168,76,0.12);
+  animation:ringPulse 6s ease-in-out infinite;
+}
+.hr1 { width:700px; height:700px; top:50%; left:50%; transform:translate(-50%,-50%); animation-delay:0s; }
+.hr2 { width:500px; height:500px; top:50%; left:50%; transform:translate(-50%,-50%); animation-delay:1.5s; }
+.hr3 { width:300px; height:300px; top:50%; left:50%; transform:translate(-50%,-50%); animation-delay:3s; }
+@keyframes ringPulse { 0%,100%{opacity:0.4;transform:translate(-50%,-50%) scale(1)} 50%{opacity:0.15;transform:translate(-50%,-50%) scale(1.04)} }
+
+.hero-content { text-align:center; z-index:5; position:relative; padding:0 24px; }
+
+/* 3D title effect */
+.hero-eyebrow {
+  font-family:'Cinzel',serif;
+  font-size:0.65rem; letter-spacing:8px; text-transform:uppercase;
+  color:var(--gold); margin-bottom:24px;
+  display:flex; align-items:center; justify-content:center; gap:16px;
+  animation:fadeUp 1s 0.2s ease both;
+}
+.hero-eyebrow::before,.hero-eyebrow::after { content:''; height:1px; width:60px; background:linear-gradient(90deg,transparent,var(--gold)); }
+.hero-eyebrow::after { transform:scaleX(-1); }
+
+.hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,10vw,9rem);
+  font-weight:300; line-height:0.92;
+  color:var(--white);
+  margin-bottom:16px;
+  animation:fadeUp 1s 0.4s ease both;
+  text-shadow:
+    0 2px 0 rgba(201,168,76,0.15),
+    0 0 80px rgba(77,184,122,0.1);
+}
+.hero-title .royal { color:var(--gold); font-style:italic; font-weight:600; }
+.hero-title .line2 {
+  display:block;
+  background:linear-gradient(135deg, var(--mint), var(--gold2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-style:italic; font-weight:300;
+}
+
+.hero-sub {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem; font-weight:300; font-style:italic;
+  color:rgba(250,246,238,0.5); margin-bottom:48px;
+  letter-spacing:2px;
+  animation:fadeUp 1s 0.6s ease both;
+}
+
+.hero-typed-wrap {
+  min-height:28px; margin-bottom:48px;
+  animation:fadeUp 1s 0.7s ease both;
+}
+.hero-typed-text {
+  font-size:0.75rem; letter-spacing:5px; text-transform:uppercase;
+  color:var(--mint); font-family:'Jost',sans-serif; font-weight:300;
+}
+#typedCursor { display:inline-block; width:1px; height:0.9em; background:var(--gold); margin-left:2px; vertical-align:middle; animation:blink 0.8s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.hero-btns { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; animation:fadeUp 1s 0.9s ease both; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── 3D ROYAL BUTTONS ── */
+.btn-royal {
+  position:relative; overflow:hidden;
+  font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:4px; text-transform:uppercase;
+  padding:18px 44px; text-decoration:none; display:inline-block; cursor:pointer;
+  border:1px solid var(--gold);
+  color:var(--gold); background:transparent;
+  transition:all 0.4s;
+  clip-path:polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.btn-royal::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  transform:translateX(-110%) skewX(-15deg);
+  transition:transform 0.4s ease;
+}
+.btn-royal:hover::before { transform:translateX(0) skewX(0); }
+.btn-royal:hover { color:var(--black); }
+.btn-royal span { position:relative; z-index:1; }
+
+.btn-ghost {
+  font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:4px; text-transform:uppercase;
+  padding:18px 44px; text-decoration:none; display:inline-block; cursor:pointer;
+  border:1px solid rgba(250,246,238,0.2);
+  color:rgba(250,246,238,0.6); background:transparent;
+  transition:all 0.4s;
+  clip-path:polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.btn-ghost:hover { border-color:var(--mint); color:var(--mint); }
+
+/* ── SCROLL HINT ── */
+.scroll-hint { position:absolute; bottom:40px; left:50%; transform:translateX(-50%); z-index:5; display:flex; flex-direction:column; align-items:center; gap:10px; animation:fadeUp 1s 1.4s ease both; }
+.scroll-hint p { font-size:0.6rem; letter-spacing:4px; text-transform:uppercase; color:rgba(201,168,76,0.4); }
+.scroll-line { width:1px; height:56px; background:linear-gradient(180deg,var(--gold),transparent); animation:scrollDrop 2s ease-in-out infinite; }
+@keyframes scrollDrop { 0%{transform:scaleY(0);transform-origin:top;opacity:0} 40%{opacity:1} 60%{transform:scaleY(1);transform-origin:top} 61%{transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom;opacity:0} }
+
+/* ── DIVIDER ── */
+.royal-divider { display:flex; align-items:center; gap:16px; margin:0 auto; max-width:600px; padding:0 48px; }
+.royal-divider::before,.royal-divider::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--border)); }
+.royal-divider::after { transform:scaleX(-1); }
+.divider-icon { color:var(--gold); font-size:1.2rem; flex-shrink:0; }
+
+/* ── STATS — 3D CARDS ── */
+.stats-section { padding:60px 60px; background:var(--deep); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); max-width:1100px; margin:0 auto; gap:2px; }
+.stat-card {
+  text-align:center; padding:48px 20px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  position:relative; overflow:hidden;
+  transition:all 0.4s;
+}
+.stat-card::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,0.06),transparent);
+  opacity:0; transition:opacity 0.4s;
+}
+.stat-card:hover::before { opacity:1; }
+.stat-card:hover { transform:translateY(-4px); border-color:rgba(201,168,76,0.4); }
+.stat-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:3.5rem; font-weight:600; line-height:1;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:8px;
+}
+.stat-label { font-size:0.65rem; letter-spacing:4px; text-transform:uppercase; color:rgba(168,216,184,0.6); }
+
+/* ── SECTION COMMON ── */
+.section-eyebrow {
+  font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:6px; text-transform:uppercase;
+  color:var(--gold); margin-bottom:12px;
+  display:flex; align-items:center; gap:12px;
+}
+.section-eyebrow::before { content:''; height:1px; width:40px; background:var(--gold); flex-shrink:0; }
+.section-title-royal {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,4vw,3.8rem); font-weight:300;
+  line-height:1.1; margin-bottom:8px;
+}
+.section-title-royal em { font-style:italic; color:var(--gold); }
+
+/* ── ABOUT — 3D SPLIT ── */
+.about { padding:120px 60px; background:var(--deep); }
+.about-wrap { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center; }
+.about-text p { color:rgba(250,246,238,0.6); line-height:2; font-size:0.95rem; margin-bottom:20px; font-weight:300; }
+.about-cta { margin-top:40px; }
+
+/* 3D visual panel */
+.about-3d {
+  position:relative;
+  perspective:800px;
+}
+.about-card-3d {
+  background:linear-gradient(135deg,var(--forest),var(--emerald));
+  border:1px solid var(--border);
+  padding:60px 48px;
+  text-align:center;
+  transform:rotateY(-8deg) rotateX(4deg);
+  transform-style:preserve-3d;
+  box-shadow:
+    20px 20px 60px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(201,168,76,0.2);
+  transition:transform 0.6s ease;
+  position:relative;
+}
+.about-card-3d::before {
+  content:'';
+  position:absolute; top:8px; left:8px; right:-8px; bottom:-8px;
+  border:1px solid rgba(201,168,76,0.1);
+  z-index:-1;
+}
+.about-card-3d:hover { transform:rotateY(0deg) rotateX(0deg); }
+.about-leaf { font-size:5rem; margin-bottom:24px; display:block; animation:leafSway 5s ease-in-out infinite; }
+@keyframes leafSway { 0%,100%{transform:rotate(-4deg) scale(1)} 50%{transform:rotate(4deg) scale(1.05)} }
+.about-quote {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem; font-style:italic; font-weight:300;
+  color:var(--pale); line-height:1.6;
+}
+.about-quote span { color:var(--gold); }
+
+/* ── GRASS — 3D IMMERSIVE ── */
+.grass-hero { position:relative; height:320px; overflow:hidden; background:var(--black); }
+#grassCanvas { display:block; width:100%; height:100%; }
+.grass-hero-label {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  text-align:center; z-index:4; pointer-events:none;
+}
+.grass-hero-label h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,6vw,5rem); font-weight:300; font-style:italic;
+  color:var(--white); text-shadow:0 4px 40px rgba(0,0,0,0.8);
+  margin-bottom:8px;
+}
+.grass-hero-label p { font-size:0.65rem; letter-spacing:6px; text-transform:uppercase; color:var(--gold); }
+
+/* 3D Gallery */
+.grass-gallery { background:var(--black); padding:3px; display:grid; grid-template-columns:repeat(3,1fr); gap:3px; }
+.grass-card {
+  position:relative; height:300px; overflow:hidden; cursor:none;
+  background:var(--forest);
+}
+.grass-thumb {
+  width:100%; height:100%; display:grid; place-items:center; font-size:5rem;
+  transition:transform 0.7s cubic-bezier(0.25,0.8,0.25,1), filter 0.5s;
+  filter:brightness(0.75) saturate(0.9);
+}
+.grass-card:hover .grass-thumb { transform:scale(1.12); filter:brightness(0.9) saturate(1.2); }
+.grass-overlay {
+  position:absolute; inset:0; z-index:2;
+  background:linear-gradient(to top, rgba(5,10,5,0.92) 0%, rgba(5,10,5,0.2) 50%, transparent 100%);
+  display:flex; flex-direction:column; justify-content:flex-end; padding:28px;
+  transition:background 0.4s;
+}
+.grass-card:hover .grass-overlay { background:linear-gradient(to top, rgba(5,10,5,0.98) 0%, rgba(5,10,5,0.4) 60%, transparent 100%); }
+.grass-overlay h3 {
+  font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400;
+  color:var(--white); margin-bottom:4px;
+  transform:translateY(6px); transition:transform 0.4s;
+}
+.grass-card:hover .grass-overlay h3 { transform:translateY(0); }
+.grass-overlay p { font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold); opacity:0; transition:opacity 0.4s 0.1s; }
+.grass-card:hover .grass-overlay p { opacity:1; }
+/* Gold frame on hover */
+.grass-card::after { content:''; position:absolute; inset:0; border:2px solid transparent; transition:border-color 0.4s; z-index:3; pointer-events:none; }
+.grass-card:hover::after { border-color:rgba(201,168,76,0.3); }
+
+.g1{background:linear-gradient(160deg,#0d2b18,#1a4a28)}
+.g2{background:linear-gradient(160deg,#112618,#2d6a4f)}
+.g3{background:linear-gradient(160deg,#0a1a0d,#1a3a22)}
+.g4{background:linear-gradient(160deg,#1a4a28,#2d7a4a)}
+.g5{background:linear-gradient(160deg,#0d2b18,#0a1a0d)}
+.g6{background:linear-gradient(160deg,#112618,#1a4a28)}
+
+/* ── SERVICES — 3D PERSPECTIVE CARDS ── */
+.services { padding:120px 60px; background:var(--deep); }
+.services-wrap { max-width:1200px; margin:0 auto; }
+.services-header { text-align:center; margin-bottom:80px; }
+.services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; perspective:1000px; }
+.service-card {
+  background:var(--glass);
+  border:1px solid var(--border2);
+  padding:52px 40px;
+  position:relative; overflow:hidden;
+  transition:all 0.5s cubic-bezier(0.25,0.8,0.25,1);
+  transform-style:preserve-3d;
+}
+.service-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0); transition:transform 0.5s;
+}
+.service-card::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,0.05),transparent);
+  opacity:0; transition:opacity 0.5s;
+}
+.service-card:hover { transform:translateY(-8px) rotateX(2deg); border-color:rgba(201,168,76,0.4); box-shadow:0 30px 60px rgba(0,0,0,0.5); }
+.service-card:hover::before { transform:scaleX(1); }
+.service-card:hover::after { opacity:1; }
+.svc-icon { font-size:3rem; margin-bottom:24px; display:block; }
+.service-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:400; color:var(--white); margin-bottom:14px; }
+.service-card p { color:rgba(168,216,184,0.6); line-height:1.9; font-size:0.88rem; font-weight:300; }
+.svc-num {
+  position:absolute; top:28px; right:28px;
+  font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300;
+  color:rgba(201,168,76,0.08); line-height:1;
+}
+
+/* ── PLANTS — 3D TILT CARDS ── */
+.plants { padding:120px 60px; background:var(--black); }
+.plants-wrap { max-width:1280px; margin:0 auto; }
+.plants-header { text-align:center; margin-bottom:80px; }
+.plants-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.plant-card {
+  background:var(--glass);
+  border:1px solid var(--border2);
+  overflow:hidden;
+  transition:all 0.4s;
+  opacity:0; transform:translateY(30px);
+  position:relative;
+}
+.plant-card.in { opacity:1; transform:translateY(0); }
+.plant-card:hover { border-color:rgba(201,168,76,0.4); transform:translateY(-6px) scale(1.02); box-shadow:0 20px 50px rgba(0,0,0,0.5); }
+.plant-thumb { height:180px; display:grid; place-items:center; font-size:4rem; transition:transform 0.5s; position:relative; overflow:hidden; }
+.plant-card:hover .plant-thumb { transform:scale(1.08); }
+.plant-thumb::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom,transparent 50%,rgba(5,10,5,0.4)); }
+.pt1{background:linear-gradient(135deg,#0d2b18,#1a4a28)}.pt2{background:linear-gradient(135deg,#112618,#2d6a4f)}.pt3{background:linear-gradient(135deg,#0a1a0d,#1a3a22)}.pt4{background:linear-gradient(135deg,#1a4a28,#2d7a4a)}.pt5{background:linear-gradient(135deg,#1c3320,#2a5535)}.pt6{background:linear-gradient(135deg,#1a3520,#243f28)}.pt7{background:linear-gradient(135deg,#1f3a25,#2d5538)}.pt8{background:linear-gradient(135deg,#0f2515,#1a3a22)}
+.plant-info { padding:20px 22px 24px; }
+.plant-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:400; color:var(--white); margin-bottom:4px; }
+.plant-type { font-size:0.62rem; letter-spacing:3px; text-transform:uppercase; color:var(--mint); opacity:0.7; }
+.plants-cta { text-align:center; margin-top:60px; }
+
+/* ── HOURS — ROYAL BANNER ── */
+.hours-royal {
+  background:linear-gradient(135deg,var(--forest),var(--emerald));
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:40px 60px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px;
+  position:relative; overflow:hidden;
+}
+.hours-royal::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,168,76,0.06), transparent);
+}
+.hours-label { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:5px; text-transform:uppercase; color:var(--gold); }
+.hours-times { display:flex; gap:40px; flex-wrap:wrap; }
+.hours-item strong { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--white); }
+.hours-item span { font-size:0.75rem; color:var(--pale); opacity:0.7; margin-left:8px; }
+.hours-enquiry-btn { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold); text-decoration:none; border:1px solid var(--gold); padding:12px 28px; transition:all 0.3s; clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); }
+.hours-enquiry-btn:hover { background:var(--gold); color:var(--black); }
+
+/* ── MAP ── */
+.map-section { height:400px; position:relative; border-top:1px solid var(--border); }
+.map-section iframe { width:100%; height:100%; border:none; display:block; filter:grayscale(0.3) brightness(0.85); }
+.map-overlay { position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+
+/* ── CONTACT — ROYAL FINAL PAGE ── */
+.contact { padding:120px 60px; background:var(--deep); position:relative; overflow:hidden; }
+.contact::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(26,74,40,0.3), transparent 70%);
+}
+.contact-wrap { max-width:1100px; margin:0 auto; position:relative; z-index:1; }
+.contact-header { text-align:center; margin-bottom:80px; }
+.contact-header .section-title-royal { font-size:clamp(3rem,5vw,5rem); }
+
+/* Two big call cards */
+.call-cards { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:800px; margin:0 auto 60px; }
+.call-card {
+  display:flex; align-items:center; gap:24px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  padding:40px 36px;
+  text-decoration:none;
+  position:relative; overflow:hidden;
+  transition:all 0.4s;
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+  cursor:pointer;
+}
+.call-card::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,0.1),transparent);
+  opacity:0; transition:opacity 0.4s;
+}
+.call-card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.call-card:hover { border-color:rgba(201,168,76,0.6); transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,0.5); }
+.call-card:hover::before { opacity:1; }
+.call-icon {
+  width:60px; height:60px; border-radius:50%;
+  border:1px solid rgba(201,168,76,0.3);
+  display:grid; place-items:center; font-size:1.6rem; flex-shrink:0;
+  background:rgba(201,168,76,0.06);
+  animation:iconRing 2.5s ease-in-out infinite;
+}
+@keyframes iconRing { 0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,0)} 50%{box-shadow:0 0 0 8px rgba(201,168,76,0.1)} }
+.call-info { flex:1; }
+.call-label { font-size:0.6rem; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+.call-number { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:400; color:var(--white); line-height:1; margin-bottom:6px; }
+.call-sub { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--mint); opacity:0.7; }
+.call-arrow { font-size:1.4rem; color:var(--gold); opacity:0.5; transition:all 0.3s; }
+.call-card:hover .call-arrow { opacity:1; transform:translateX(4px); }
+
+/* Address & hours row */
+.contact-details { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:800px; margin:0 auto; }
+.detail-card {
+  background:var(--glass);
+  border:1px solid var(--border2);
+  padding:32px 30px;
+  display:flex; gap:20px; align-items:flex-start;
+}
+.detail-icon { font-size:1.4rem; flex-shrink:0; margin-top:2px; }
+.detail-label { font-size:0.6rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.detail-value { color:var(--pale); font-size:0.92rem; line-height:1.8; font-weight:300; }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--black);
+  padding:40px 60px;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;
+  border-top:1px solid var(--border);
+}
+.footer-logo { font-family:'Cinzel',serif; font-size:1rem; letter-spacing:4px; color:var(--gold); }
+footer p { font-size:0.7rem; letter-spacing:2px; color:rgba(250,246,238,0.25); }
+.footer-links { display:flex; gap:28px; }
+.footer-links a { font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:rgba(250,246,238,0.3); text-decoration:none; transition:color 0.3s; }
+.footer-links a:hover { color:var(--gold); }
+
+/* ── PARTICLES ── */
+#particleCanvas { position:fixed; inset:0; pointer-events:none; z-index:9998; }
+
+/* ── TOAST ── */
+#toast { position:fixed; bottom:96px; left:50%; transform:translateX(-50%) translateY(20px); background:rgba(5,10,5,0.95); color:var(--gold); padding:12px 28px; border-radius:2px; font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; z-index:9000; opacity:0; transition:all 0.4s; border:1px solid var(--border); pointer-events:none; white-space:nowrap; }
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+
+/* ════════════════════════════════════════
+   FULL RESPONSIVE — ALL DEVICES
+════════════════════════════════════════ */
+
+/* ── MOBILE NAV HAMBURGER ── */
+#menuBtn {
+  display:none;
+  flex-direction:column; gap:5px;
+  background:none; border:none; cursor:pointer;
+  padding:8px; z-index:400;
+}
+#menuBtn span {
+  display:block; width:26px; height:1.5px;
+  background:var(--gold); transition:all 0.4s;
+  transform-origin:center;
+}
+#menuBtn.open span:nth-child(1) { transform:translateY(6.5px) rotate(45deg); }
+#menuBtn.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+#menuBtn.open span:nth-child(3) { transform:translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile slide-down menu */
+.mobile-menu {
+  display:none;
+  position:fixed; top:65px; left:0; right:0;
+  background:rgba(5,10,5,0.98);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  flex-direction:column; z-index:250;
+  padding:24px 0;
+  transform:translateY(-20px); opacity:0;
+  transition:all 0.4s;
+}
+.mobile-menu.open { transform:translateY(0); opacity:1; }
+.mobile-menu a {
+  font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:5px; text-transform:uppercase;
+  color:var(--pale); text-decoration:none;
+  padding:16px 40px; display:block;
+  border-bottom:1px solid rgba(201,168,76,0.06);
+  transition:color 0.3s, padding-left 0.3s;
+}
+.mobile-menu a:hover { color:var(--gold); padding-left:52px; }
+
+/* ── DESKTOP (1200px+) ── */
+@media(min-width:1200px) {
+  nav { padding:20px 80px; }
+  .about-wrap { gap:120px; }
+  .plants-grid { grid-template-columns:repeat(4,1fr); }
+  .services-grid { grid-template-columns:repeat(3,1fr); }
+}
+
+/* ── TABLET LANDSCAPE (900px – 1199px) ── */
+@media(max-width:1199px) and (min-width:900px) {
+  nav { padding:18px 40px; }
+  .about-wrap { gap:60px; }
+  .plants-grid { grid-template-columns:repeat(3,1fr); }
+  .hero-title { font-size:clamp(3.5rem,7vw,6rem); }
+  .services-grid { gap:16px; }
+  .contact-wrap { padding:0 20px; }
+  .call-cards { gap:16px; }
+}
+
+/* ── TABLET PORTRAIT (600px – 899px) ── */
+@media(max-width:899px) and (min-width:600px) {
+  /* Nav */
+  nav { padding:14px 24px; }
+  .nav-links { display:none; }
+  #menuBtn { display:flex; }
+  .mobile-menu { display:flex; }
+
+  /* Hero */
+  .hero { padding-top:70px; }
+  .hero-title { font-size:clamp(3rem,10vw,5rem); }
+  .hero-sub { font-size:1rem; }
+  .hero-btns { gap:12px; }
+  .btn-royal,.btn-ghost { padding:14px 28px; font-size:0.6rem; }
+  .hero-ring { display:none; }
+
+  /* Stats */
+  .stats-section { padding:40px 24px; }
+  .stats-grid { grid-template-columns:repeat(2,1fr); gap:1px; }
+
+  /* About */
+  .about { padding:80px 32px; }
+  .about-wrap { grid-template-columns:1fr; gap:48px; }
+  .about-card-3d { transform:none; max-width:480px; margin:0 auto; }
+
+  /* Grass */
+  .grass-gallery { grid-template-columns:repeat(2,1fr); }
+  .grass-card { height:240px; }
+
+  /* Services */
+  .services { padding:80px 32px; }
+  .services-grid { grid-template-columns:1fr 1fr; gap:16px; }
+  .service-card { padding:36px 28px; }
+
+  /* Plants */
+  .plants { padding:80px 32px; }
+  .plants-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+
+  /* Hours */
+  .hours-royal { padding:28px 32px; flex-direction:column; text-align:center; gap:20px; }
+  .hours-times { justify-content:center; }
+
+  /* Contact */
+  .contact { padding:80px 32px; }
+  .call-cards { grid-template-columns:1fr; gap:16px; max-width:480px; }
+  .contact-details { grid-template-columns:1fr; gap:12px; max-width:480px; }
+  .call-number { font-size:1.7rem; }
+
+  /* Footer */
+  footer { flex-direction:column; text-align:center; padding:32px 24px; gap:16px; }
+  .footer-links { justify-content:center; flex-wrap:wrap; gap:20px; }
+}
+
+/* ── MOBILE (320px – 599px) ── */
+@media(max-width:599px) {
+  /* Hide custom cursor on touch devices */
+  #cursor, #cursorRing { display:none; }
+  body { cursor:auto; }
+  a, button { cursor:pointer; }
+
+  /* Nav */
+  nav { padding:12px 20px; }
+  .nav-links { display:none; }
+  .nav-logo { font-size:0.85rem; letter-spacing:2px; }
+  #menuBtn { display:flex; }
+  .mobile-menu { display:flex; top:58px; }
+
+  /* Hero */
+  .hero { padding-top:60px; min-height:100svh; }
+  .hero-title { font-size:clamp(2.6rem,13vw,4rem); line-height:0.95; }
+  .hero-sub { font-size:0.9rem; letter-spacing:1px; }
+  .hero-eyebrow { font-size:0.55rem; letter-spacing:4px; gap:8px; }
+  .hero-eyebrow::before,.hero-eyebrow::after { width:30px; }
+  .hero-btns { flex-direction:column; align-items:center; gap:12px; }
+  .btn-royal,.btn-ghost { padding:15px 32px; width:100%; max-width:280px; text-align:center; }
+  .hero-ring,.orb { display:none; }
+  .hero-grid { opacity:0.4; }
+
+  /* Stats */
+  .stats-section { padding:32px 16px; }
+  .stats-grid { grid-template-columns:repeat(2,1fr); gap:1px; }
+  .stat-card { padding:32px 16px; }
+  .stat-num { font-size:2.4rem; }
+  .stat-label { font-size:0.58rem; letter-spacing:2px; }
+
+  /* About */
+  .about { padding:64px 20px; }
+  .about-wrap { grid-template-columns:1fr; gap:40px; }
+  .about-card-3d { transform:none; padding:40px 28px; }
+  .about-leaf { font-size:3.5rem; }
+  .about-quote { font-size:1.2rem; }
+  .section-title-royal { font-size:clamp(2rem,8vw,2.8rem); }
+  .section-eyebrow { font-size:0.55rem; letter-spacing:4px; }
+  .section-eyebrow::before { width:24px; }
+
+  /* Grass */
+  .grass-hero { height:220px; }
+  .grass-hero-label h2 { font-size:clamp(1.8rem,8vw,3rem); }
+  .grass-hero-label p { font-size:0.55rem; letter-spacing:4px; }
+  .grass-gallery { grid-template-columns:1fr 1fr; gap:2px; }
+  .grass-card { height:180px; }
+  .grass-overlay h3 { font-size:1rem; }
+
+  /* Services */
+  .services { padding:64px 20px; }
+  .services-grid { grid-template-columns:1fr; gap:12px; }
+  .service-card { padding:36px 28px; }
+  .svc-num { font-size:3rem; }
+
+  /* Plants */
+  .plants { padding:64px 20px; }
+  .plants-grid { grid-template-columns:1fr 1fr; gap:10px; }
+  .plant-name { font-size:0.95rem; }
+  .plant-type { font-size:0.58rem; }
+  .plant-thumb { height:140px; font-size:3rem; }
+
+  /* Hours */
+  .hours-royal { padding:24px 20px; flex-direction:column; text-align:center; gap:16px; }
+  .hours-label { font-size:0.58rem; }
+  .hours-times { flex-direction:column; gap:8px; }
+  .hours-item strong { font-size:0.95rem; }
+  .hours-enquiry-btn { padding:10px 24px; font-size:0.58rem; }
+
+  /* Map */
+  .map-section { height:280px; }
+
+  /* Contact */
+  .contact { padding:64px 20px; }
+  .contact-header .section-title-royal { font-size:clamp(2.2rem,9vw,3.2rem); }
+  .call-cards { grid-template-columns:1fr; gap:12px; max-width:100%; }
+  .call-card { padding:28px 24px; clip-path:none; border-radius:2px; }
+  .call-number { font-size:1.6rem; }
+  .call-icon { width:48px; height:48px; font-size:1.3rem; }
+  .contact-details { grid-template-columns:1fr; gap:10px; max-width:100%; }
+  .detail-card { padding:24px 20px; }
+  .detail-value { font-size:0.85rem; }
+
+  /* Footer */
+  footer { flex-direction:column; text-align:center; padding:28px 20px; gap:12px; }
+  footer p { font-size:0.62rem; }
+  .footer-logo { font-size:0.85rem; }
+  .footer-links { flex-wrap:wrap; justify-content:center; gap:16px; }
+  .footer-links a { font-size:0.6rem; letter-spacing:2px; }
+
+  /* Toast */
+  #toast { font-size:0.58rem; padding:10px 20px; white-space:normal; text-align:center; width:80%; }
+
+  /* Back to top */
+  #backTop { width:40px; height:40px; bottom:20px; right:20px; font-size:0.9rem; }
+}
+
+/* ── VERY SMALL PHONES (below 360px) ── */
+@media(max-width:359px) {
+  .hero-title { font-size:2.4rem; }
+  .plants-grid { grid-template-columns:1fr; }
+  .grass-gallery { grid-template-columns:1fr; }
+  .stats-grid { grid-template-columns:1fr 1fr; }
+  .btn-royal,.btn-ghost { padding:13px 24px; font-size:0.55rem; }
+}
+
+/* ── TOUCH DEVICES — remove hover 3D effects ── */
+@media(hover:none) {
+  .about-card-3d { transform:none; }
+  .service-card:hover,.plant-card:hover,.call-card:hover { transform:none; }
+  .grass-card:hover .grass-thumb { transform:scale(1.04); }
+}
+
+/* ── HIGH RESOLUTION (Retina) ── */
+@media(-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi) {
+  .hero-grid { opacity:0.5; }
+}
+
+/* ── LANDSCAPE MOBILE ── */
+@media(max-width:900px) and (orientation:landscape) and (max-height:500px) {
+  .hero { min-height:100lvh; padding-top:60px; }
+  .hero-title { font-size:clamp(2.2rem,8vw,3.5rem); }
+  .hero-sub { display:none; }
+  .scroll-hint { display:none; }
+  .stats-grid { grid-template-columns:repeat(4,1fr); }
+}
+
+/* ── PRINT ── */
+@media print {
+  nav,#scrollBar,#backTop,#cursor,#cursorRing,#particleCanvas,.hero-video,.scroll-hint { display:none !important; }
+  body { background:white; color:black; }
+  .contact { padding:40px 0; }
+  .call-number { color:black; font-size:1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursorRing"></div>
+
+<!-- Scroll bar -->
+<div id="scrollBar"></div>
+
+<!-- Back to top -->
+<button id="backTop" title="Top">↑</button>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Particles -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <div class="nav-logo">Varshaana Nursery</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#grass">Landscaping</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#plants">Plants</a></li>
+    <li><a href="#contact">Enquiry</a></li>
+  </ul>
+  <!-- Hamburger — mobile only -->
+  <button id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile slide menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"    onclick="closeMenu()">About</a>
+  <a href="#grass"    onclick="closeMenu()">Landscaping</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#plants"   onclick="closeMenu()">Plants</a>
+  <a href="#contact"  onclick="closeMenu()">Enquiry</a>
+</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="home">
+  <video class="hero-video" autoplay muted loop playsinline
+    poster="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=80">
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-ring hr1"></div>
+  <div class="hero-ring hr2"></div>
+  <div class="hero-ring hr3"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Wholesale Plant Nursery · Tamil Nadu</div>
+    <h1 class="hero-title">
+      Varshaana<br>
+      <span class="line2">Nursery</span>
+    </h1>
+    <p class="hero-sub">Where Nature Meets Craftsmanship</p>
+    <div class="hero-typed-wrap">
+      <span class="hero-typed-text"><span id="typedText"></span><span id="typedCursor"></span></span>
+    </div>
+    <div class="hero-btns">
+      <a href="#grass" class="btn-royal"><span>Explore Our Work</span></a>
+      <a href="#contact" class="btn-ghost">Contact &amp; Enquiry</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <p>Scroll</p>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════ STATS ══════════ -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num">500+</div><div class="stat-label">Plant Varieties</div></div>
+    <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label">Years Experience</div></div>
+    <div class="stat-card"><div class="stat-num">1000+</div><div class="stat-label">Happy Customers</div></div>
+    <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Natural &amp; Healthy</div></div>
+  </div>
+</div>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section class="about" id="about">
+  <div class="about-wrap">
+    <div class="about-text">
+      <div class="section-eyebrow">Who We Are</div>
+      <h2 class="section-title-royal">Rooted in <em>Nature</em>,<br>Growing with You</h2>
+      <p>Varshaana Nursery is a trusted wholesale plant nursery in North Boothinatham, Udumalaipettai, Tamil Nadu. We supply ornamentals, flowering plants, fruit trees, grass turf and more to landscapers, gardeners and bulk buyers across the region.</p>
+      <p>We specialise in plants, landscaping garden work and garden maintenance — bringing greenery and beauty to homes, offices and commercial spaces across Tamil Nadu.</p>
+      <div class="about-cta">
+        <a href="#contact" class="btn-royal"><span>Get In Touch</span></a>
+      </div>
+    </div>
+    <div class="about-3d">
+      <div class="about-card-3d">
+        <span class="about-leaf">🌱</span>
+        <blockquote class="about-quote">
+          "Your garden is our pride —<br>
+          <span>we make it beautiful.</span>"
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ GRASS / LANDSCAPING ══════════ -->
+<div id="grass">
+  <div class="grass-hero">
+    <canvas id="grassCanvas"></canvas>
+    <div class="grass-hero-label">
+      <h2>Landscaping &amp; Grass</h2>
+      <p>Professional Garden Work</p>
+    </div>
+  </div>
+  <div class="grass-gallery">
+    <div class="grass-card"><div class="grass-thumb g1">🌿</div><div class="grass-overlay"><h3>Lawn Turfing</h3><p>Full Grass Setup</p></div></div>
+    <div class="grass-card"><div class="grass-thumb g2">🏡</div><div class="grass-overlay"><h3>Garden Design</h3><p>Custom Layouts</p></div></div>
+    <div class="grass-card"><div class="grass-thumb g3">🌱</div><div class="grass-overlay"><h3>Grass Planting</h3><p>All Varieties</p></div></div>
+    <div class="grass-card"><div class="grass-thumb g4">🪴</div><div class="grass-overlay"><h3>Border Planting</h3><p>Edge &amp; Trim Work</p></div></div>
+    <div class="grass-card"><div class="grass-thumb g5">🌵</div><div class="grass-overlay"><h3>Mexican Grass</h3><p>Carpet Grass · Low Water</p></div></div>
+    <div class="grass-card"><div class="grass-thumb g6">🤝</div><div class="grass-overlay"><h3>Take Care</h3><p>Full Garden Care Service</p></div></div>
+  </div>
+</div>
+
+<!-- ══════════ SERVICES ══════════ -->
+<section class="services" id="services">
+  <div class="services-wrap">
+    <div class="services-header">
+      <div class="section-eyebrow" style="justify-content:center">What We Offer</div>
+      <h2 class="section-title-royal">Our <em>Services</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="svc-num">01</span>
+        <span class="svc-icon">🌿</span>
+        <h3>Wholesale Plants</h3>
+        <p>Ornamentals, indoor, outdoor, flowering, foliage, fruit trees, grass turf and more — at wholesale prices for landscapers and bulk buyers.</p>
+      </div>
+      <div class="service-card">
+        <span class="svc-num">02</span>
+        <span class="svc-icon">🏡</span>
+        <h3>Landscaping Garden Work</h3>
+        <p>Transform homes, offices and commercial spaces into stunning green environments. We design and execute the complete garden setup.</p>
+      </div>
+      <div class="service-card">
+        <span class="svc-num">03</span>
+        <span class="svc-icon">🔧</span>
+        <h3>Garden Maintenance</h3>
+        <p>Regular maintenance packages — pruning, watering, fertilising, pest control, grass cutting and seasonal care for all garden sizes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PLANTS ══════════ -->
+<section class="plants" id="plants">
+  <div class="plants-wrap">
+    <div class="plants-header">
+      <div class="section-eyebrow" style="justify-content:center">Our Collection</div>
+      <h2 class="section-title-royal">Popular <em>Plants</em></h2>
+    </div>
+    <div class="plants-grid">
+      <div class="plant-card"><div class="plant-thumb pt1">🌴</div><div class="plant-info"><div class="plant-name">Palm Trees</div><div class="plant-type">Ornamental · Outdoor</div></div></div>
+      <div class="plant-card"><div class="plant-thumb pt2">🌺</div><div class="plant-info"><div class="plant-name">Flowering Plants</div><div class="plant-type">Decorative · Garden</div></div></div>
+      <div class="plant-card"><div class="plant-thumb pt3">🌿</div><div class="plant-info"><div class="plant-name">Foliage Plants</div><div class="plant-type">Indoor · Outdoor</div></div></div>
+      <div class="plant-card"><div class="plant-thumb pt4">🌳</div><div class="plant-info"><div class="plant-name">Shade Trees</div><div class="plant-type">Landscape · Garden</div></div></div>
+      <div class="plant-card"><div class="plant-thumb pt5">🌸</div><div class="plant-info"><div class="plant-name">Bougainvillea</div><div class="plant-type">Climbing · Ornamental</div></div></div>
+      <div class="plant-card"><div class="plant-thumb pt6">🌻</div><div class="plant-info"><div class="plant-name">Seasonal Flowers</div><div class="plant-type">Annual · Perennial</div></div></div>
+      <div class="plant-card"><div class="plant-thumb pt7">🌷</div><div class="plant-info"><div class="plant-name">Succulents &amp; Cacti</div><div class="plant-type">Indoor · Low Maintenance</div></div></div>
+      <div class="plant-card"><div class="plant-thumb pt8">🥭</div><div class="plant-info"><div class="plant-name">Fruit Trees</div><div class="plant-type">Mango · Guava · More</div></div></div>
+    </div>
+    <div class="plants-cta">
+      <a href="#contact" class="btn-royal"><span>Enquire About Plants</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ HOURS ══════════ -->
+<div class="hours-royal">
+  <div class="hours-label">🕐 Opening Hours</div>
+  <div class="hours-times">
+    <div class="hours-item"><strong>Mon – Sat</strong><span>6:00 AM – 7:30 PM</span></div>
+    <div class="hours-item"><strong>Sunday</strong><span>6:00 AM – 1:00 PM</span></div>
+  </div>
+  <a href="#contact" class="hours-enquiry-btn">Book Appointment</a>
+</div>
+
+<!-- ══════════ MAP ══════════ -->
+<div class="map-section">
+  <div class="map-overlay"></div>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3921.2!2d77.2839!3d10.5937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDM1JzM3LjMiTiA3N8KwMTcnMDIuMCJF!5e0!3m2!1sen!2sin!4v1700000000000"
+    allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Varshaana Nursery">
+  </iframe>
+</div>
+
+<!-- ══════════ CONTACT — ONLY PLACE WITH PHONE NUMBERS ══════════ -->
+<section class="contact" id="contact">
+  <div class="contact-wrap">
+    <div class="contact-header">
+      <div class="section-eyebrow" style="justify-content:center">Get In Touch</div>
+      <h2 class="section-title-royal">Contact &amp; <em>Enquiry</em></h2>
+      <p style="color:rgba(250,246,238,0.4);font-size:0.85rem;letter-spacing:2px;margin-top:12px">Tap a number below — your phone dials instantly</p>
+    </div>
+
+    <!-- TWO PHONE NUMBERS — ONLY HERE -->
+    <div class="call-cards">
+      <a href="tel:+919566960019" class="call-card">
+        <div class="call-icon">📞</div>
+        <div class="call-info">
+          <div class="call-label">Phone · Line 1</div>
+          <div class="call-number">95669 60019</div>
+          <div class="call-sub">Tap to call now</div>
+        </div>
+        <div class="call-arrow">→</div>
+      </a>
+      <a href="tel:+919994151495" class="call-card">
+        <div class="call-icon">📞</div>
+        <div class="call-info">
+          <div class="call-label">Phone · Line 2</div>
+          <div class="call-number">99941 51495</div>
+          <div class="call-sub">Tap to call now</div>
+        </div>
+        <div class="call-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="contact-details">
+      <div class="detail-card">
+        <div class="detail-icon">📍</div>
+        <div>
+          <div class="detail-label">Address</div>
+          <div class="detail-value">D No 33, Dhali Rd, Pirivu,<br>Kuralkuttai, Udumalaipettai,<br>Tamil Nadu – 642126</div>
+        </div>
+      </div>
+      <div class="detail-card">
+        <div class="detail-icon">🕐</div>
+        <div>
+          <div class="detail-label">Opening Hours</div>
+          <div class="detail-value">Mon – Sat: 6:00 AM – 7:30 PM<br>Sunday: 6:00 AM – 1:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-logo">Varshaana Nursery</div>
+  <p>© 2025 Varshaana Nursery · Udumalaipettai, Tamil Nadu</p>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#grass">Landscaping</a>
+    <a href="#services">Services</a>
+    <a href="#plants">Plants</a>
+    <a href="#contact">Enquiry</a>
+  </div>
+</footer>
+
+<script>
+/* ── CUSTOM CURSOR ── */
+var cur=document.getElementById('cursor'), curR=document.getElementById('cursorRing');
+document.addEventListener('mousemove',function(e){
+  cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px';
+  setTimeout(function(){curR.style.left=e.clientX+'px';curR.style.top=e.clientY+'px';},80);
+});
+document.querySelectorAll('a,button,.grass-card,.plant-card,.service-card,.call-card').forEach(function(el){
+  el.addEventListener('mouseenter',function(){curR.style.transform='translate(-50%,-50%) scale(2)';curR.style.borderColor='rgba(201,168,76,0.6)';});
+  el.addEventListener('mouseleave',function(){curR.style.transform='translate(-50%,-50%) scale(1)';curR.style.borderColor='rgba(201,168,76,0.5)';});
+});
+
+/* ── SCROLL PROGRESS ── */
+var sb=document.getElementById('scrollBar');
+window.addEventListener('scroll',function(){sb.style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%';},{passive:true});
+
+/* ── BACK TO TOP ── */
+var bt=document.getElementById('backTop');
+window.addEventListener('scroll',function(){bt.classList.toggle('show',window.scrollY>500);},{passive:true});
+bt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+/* ── TYPED TEXT ── */
+var phrases=['Plants · Landscaping · Garden Care','Wholesale Plant Nursery, Tamil Nadu','Beautiful Gardens Start Here','Udumalaipettai · North Boothinatham'];
+var tEl=document.getElementById('typedText'),ti=0,ci=0,typing=true;
+function runTyped(){
+  var p=phrases[ti];
+  if(typing){tEl.textContent=p.slice(0,++ci);if(ci===p.length){typing=false;setTimeout(runTyped,2000);return;}}
+  else{tEl.textContent=p.slice(0,--ci);if(ci===0){typing=true;ti=(ti+1)%phrases.length;}}
+  setTimeout(runTyped,typing?75:35);
+}
+runTyped();
+
+/* ── ANIMATED GRASS CANVAS ── */
+(function(){
+  var c=document.getElementById('grassCanvas');if(!c)return;
+  var ctx=c.getContext('2d'),bl=[],W,H;
+  function resize(){
+    W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;bl=[];
+    var n=Math.floor(W/4);
+    for(var i=0;i<n;i++){bl.push({x:(i/n)*W+Math.random()*10-5,h:50+Math.random()*130,w:1.5+Math.random()*3,ph:Math.random()*Math.PI*2,sp:0.3+Math.random()*0.9,c:['#1a4a28','#2d7a4a','#4db87a','#112618','#0d2b18'][Math.floor(Math.random()*5)]});}
+  }
+  resize();window.addEventListener('resize',resize);
+  var t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var g=ctx.createLinearGradient(0,H*0.7,0,H);g.addColorStop(0,'#1a4a28');g.addColorStop(1,'#050a05');
+    ctx.fillStyle=g;ctx.fillRect(0,H*0.7,W,H*0.3);
+    bl.forEach(function(b){
+      var sw=Math.sin(t*b.sp+b.ph)*20;
+      ctx.beginPath();ctx.moveTo(b.x,H);ctx.quadraticCurveTo(b.x+sw,H-b.h*0.5,b.x+sw*1.5,H-b.h);
+      ctx.lineWidth=b.w;ctx.strokeStyle=b.c;ctx.lineCap='round';ctx.stroke();
+    });
+    t+=0.016;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── INTERSECTIONOBSERVER — Cards + Stats + Active Nav ── */
+var counted=false,statEls=document.querySelectorAll('.stat-num'),statVals=[500,10,1000,100],statSuf=['+','+','+','%'];
+/* Counter function */
+function animateCount(el,target,suf){
+  var start=null,dur=1800;
+  function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1),ease=1-Math.pow(1-p,3);el.textContent=Math.floor(ease*target)+suf;if(p<1)requestAnimationFrame(step);}
+  requestAnimationFrame(step);
+}
+
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(!entry.isIntersecting)return;
+    // Stat counters
+    if(entry.target.classList.contains('stats-section')&&!counted){
+      counted=true;
+      statEls.forEach(function(el,i){animateCount(el,statVals[i],statSuf[i]);});
+    }
+    // Card stagger
+    entry.target.querySelectorAll('.service-card,.plant-card,.grass-card,.call-card,.detail-card,.stat-card').forEach(function(c,i){
+      c.style.transition='opacity 0.6s '+(i*0.1)+'s ease,transform 0.6s '+(i*0.1)+'s ease';
+      c.style.opacity='1';c.style.transform='translateY(0)';c.classList.add('in');
+    });
+    io.unobserve(entry.target);
+  });
+},{threshold:0.1});
+document.querySelectorAll('.stats-section,.services-grid,.plants-grid,.grass-gallery,.call-cards,.contact-details,.stats-grid').forEach(function(el){
+  // Set initial hidden state
+  el.querySelectorAll('.service-card,.plant-card,.grass-card,.call-card,.detail-card,.stat-card').forEach(function(c){c.style.opacity='0';c.style.transform='translateY(24px)';});
+  io.observe(el);
+});
+
+/* Active nav */
+var navAs=document.querySelectorAll('.nav-links a');
+var ioNav=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){navAs.forEach(function(a){a.classList.remove('active');});var a=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');if(a)a.classList.add('active');}
+  });
+},{threshold:0.4});
+document.querySelectorAll('section[id],div[id]').forEach(function(el){ioNav.observe(el);});
+
+/* ── PARTICLES ── */
+var pc=document.getElementById('particleCanvas'),pctx=pc.getContext('2d'),pts=[];
+function rsz(){pc.width=window.innerWidth;pc.height=window.innerHeight;}rsz();window.addEventListener('resize',rsz);
+function burst(x,y){
+  for(var i=0;i<24;i++){var a=(Math.PI*2/24)*i,sp=2+Math.random()*5;pts.push({x:x,y:y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,r:3+Math.random()*5,c:['#c9a84c','#4db87a','#e8c96a','#a8d8b8','#ffffff'][Math.floor(Math.random()*5)]});}
+  animP();
+}
+function animP(){
+  pctx.clearRect(0,0,pc.width,pc.height);
+  pts=pts.filter(function(p){return p.life>0;});
+  if(!pts.length)return;
+  pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.life-=0.022;pctx.globalAlpha=p.life;pctx.beginPath();pctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);pctx.fillStyle=p.c;pctx.fill();});
+  pctx.globalAlpha=1;requestAnimationFrame(animP);
+}
+document.querySelectorAll('.call-card,.btn-royal').forEach(function(btn){
+  btn.addEventListener('click',function(e){var r=btn.getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2);});
+});
+
+/* ── TOAST ── */
+var toast=document.getElementById('toast'),tt;
+function showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('show');},2600);}
+document.querySelectorAll('.call-card').forEach(function(c){c.addEventListener('click',function(){showToast('📞 Calling Varshaana Nursery...');});});
+
+/* ── PARALLAX HERO ── */
+document.addEventListener('mousemove',function(e){
+  var orbs=document.querySelectorAll('.orb');
+  orbs.forEach(function(o,i){var f=(i+1)*0.4;o.style.transform='translate('+(e.clientX/window.innerWidth-0.5)*20*f+'px,'+(e.clientY/window.innerHeight-0.5)*15*f+'px)';});
+  var rings=document.querySelectorAll('.hero-ring');
+  rings.forEach(function(r,i){var f=(i+1)*0.15;r.style.transform='translate(calc(-50% + '+(e.clientX/window.innerWidth-0.5)*20*f+'px),calc(-50% + '+(e.clientY/window.innerHeight-0.5)*15*f+'px))';});
+});
+
+/* ── MOBILE HAMBURGER MENU ── */
+var menuBtn=document.getElementById('menuBtn');
+var mobileMenu=document.getElementById('mobileMenu');
+function closeMenu(){
+  menuBtn.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+if(menuBtn){
+  menuBtn.addEventListener('click',function(){
+    menuBtn.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+}
+// Close menu on scroll
+window.addEventListener('scroll',closeMenu,{passive:true});
+
+document.querySelectorAll('.btn-royal,.btn-ghost,.hours-enquiry-btn').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    var r=btn.getBoundingClientRect(),sz=Math.max(r.width,r.height),rp=document.createElement('span');
+    rp.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,0.2);width:'+sz+'px;height:'+sz+'px;left:'+(e.clientX-r.left-sz/2)+'px;top:'+(e.clientY-r.top-sz/2)+'px;transform:scale(0);animation:rippleAnim 0.6s linear;pointer-events:none';
+    btn.style.position='relative';btn.style.overflow='hidden';
+    btn.appendChild(rp);setTimeout(function(){rp.remove();},700);
+  });
+});
+</script>
+</body>
+</html>
